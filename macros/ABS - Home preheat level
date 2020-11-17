@@ -1,0 +1,23 @@
+G28        ; Basic home all
+G90        ; Abs pos
+
+M98 P"/macros/motion/xyz_front_high.g"
+
+T0         ; select tool 0
+
+; warm up bed and head
+M291 P"Pre heat started, waiting for head warm up" S0
+M140 S105  ; non-blocking
+M109 S200  ; blocking
+
+M291 P"Please clean my head" S3
+
+M98 P"/macros/motion/xyz_back_right_high.g"
+
+; wait for bed to fully warm up
+M291 P"Waiting for bed warm up"  S0
+M190 S105  ; blocking
+
+M291 P"Press ok once heat-soaked (15min)" S3
+
+G32        ; level the gantry while everything is hot

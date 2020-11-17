@@ -1,0 +1,15 @@
+M291 P"Is the bed heated and printer heat soaked?" S3
+
+M561   ; ignore current heightmap
+G32    ; Level the gantry while everything is hot
+G28 Z  ; Home Z to switch to the induction probe and establish Z=0 for it
+
+; Probe a new bed mesh and save it
+; https://duet3d.dozuki.com/Wiki/Gcode#Section_G29_Mesh_bed_probe
+G29 S0
+
+; Restore Z=0 to the proper reference
+M98 P"/macros/z_probe/use_switch.g"
+
+; Keep the switch probe active so all Z future offsets are relative to it.
+; Switching the active probe type in RRF changes the Z offset!

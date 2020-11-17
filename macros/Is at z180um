@@ -1,0 +1,3 @@
+G92 Z0.18     ; Current Z is at 0.18mm (180um)
+M564 S1       ; Disallow negative Z moves
+G1 Z10 F99999 ; Move up
