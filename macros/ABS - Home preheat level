@@ -1,23 +1,34 @@
-G28        ; Basic home all
 G90        ; Abs pos
-
-M98 P"/macros/motion/xyz_front_high.g"
-
 T0         ; select tool 0
 
-; warm up bed and head
-M291 P"Pre heat started, waiting for head warm up" S0
-M140 S105  ; non-blocking
-M109 S200  ; blocking
+; Start pre-heating bed (will take long)
+M140 S100     ; non-blocking bed
 
+; Home
+G28           ; Home all axis
+
+; Bed takes a long amount of time, heat close to desired without going further then push to final
+M190 S100     ; blocking bed
+M140 S105     ; non-blocking bed
+
+; Start heating head and once hot retract bit of filament (still heating bed)
+M109 S180     ; blocking head
+M83           ; relative extruder mode
+G1 E-30 F300  ; Retract a little bit, slowly
+
+; Once all hot, level bed
+M116          ; Wait for all to reach temp
+M561          ; Clear any bed transform
+M98 P"/macros/z_probe/level_inductive.g"
+
+; Once level ask for head clean
+M98 P"/macros/motion/xyz_front_high.g"
+M300 S2000 P200  ; beep
 M291 P"Please clean my head" S3
 
-M98 P"/macros/motion/xyz_back_right_high.g"
+; Determine Z by switch (and swap back)
+M98 P"/macros/z_probe/height_switch.g"
+M98 P"/macros/z_probe/use_inductive.g"
 
-; wait for bed to fully warm up
-M291 P"Waiting for bed warm up"  S0
-M190 S105  ; blocking
-
-M291 P"Press ok once heat-soaked (15min)" S3
-
-G32        ; level the gantry while everything is hot
+; Restore mesh
+G29 S1  ; Load previously probed bed mesh

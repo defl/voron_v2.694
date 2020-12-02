@@ -1,3 +1,5 @@
+; https://duet3d.dozuki.com/Wiki/Using_mesh_bed_compensation
+
 M291 P"Is the bed heated and printer heat soaked?" S3
 
 M561   ; ignore current heightmap

@@ -1,0 +1,1 @@
+M564 H1 S0   ; Allow movement outside bounds, but not unhomed

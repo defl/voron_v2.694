@@ -1,12 +1,13 @@
-; homeall.g
-; called to home all axes
+; homeall.g, called with G28
 
-; Allow movements before homing
-M564 H0
+
+M564 H0  ; Allow movements before homing
 
 M98 P"/macros/motion/z_hop_slow.g"
 
+;
 ; XY
+;
 M98 P"/macros/drive/xy_reduced.g"
 
 G91                    ; Relative positioning
@@ -24,11 +25,14 @@ G90                    ; Absolute positioning
 
 M98 P"/macros/drive/xy_normal.g"
 
+;
 ; Z
-M98 P"/macros/z_probe/height_inductive.g"
-
 ; Note that homing Z does not set the final Z offset used for printing!
 ; You *must* probe Z with the Z switch before checking/calibrating the Z offset.
+;
+M98 P"/macros/z_probe/height_inductive.g"
+
 
 ; Homing done, enforce limits
 M564 S1 H1
+

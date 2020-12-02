@@ -75,8 +75,8 @@ M557 X25:325 Y25:325 S25                        ; Define bed mesh grid (inductiv
 ; DO NOT GO OVER 0.4w/cm2! Better still ~10m to 100c. So 65% PWM max, better is 40-50% range.
 ; DO NOT SCREW TIGHT FIRST FEW RUNS
 ; Tuning:
-;   M303 H0 P0.5 S100 ; run autotune on bed with 50% PWM max
-;   M500 to save autotune results to config-override.g
+;   M303 H0 P0.65 S105  ; run autotune on bed with 65% PWM max
+;   M500                ; save autotune results to config-override.g
 M305 P0 S"Bed heater" T100000 B4584             ; bed thermistor (Keenovo NTC 100K 3950K), beta comes from range 25-100c from R/T sheet
 M143 P100 H0 X103 A2 C0 S110                    ; make sure silicone heater stays below 110°C
 M143 P101 H0 X103 A1 C0 S125                    ; make sure silicone heater shuts down at 125°C (there is a fuse at 135°C)

@@ -1,4 +1,4 @@
-; Move slowly to XY first and then straigth down, saves digging trenches in the plate
+; Move slowly to XY first and then straight down, saves digging trenches in the plate
 
 M98 P"/macros/motion/z_hop_slow.g"
 
