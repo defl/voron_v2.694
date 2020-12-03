@@ -15,7 +15,7 @@ M667 S1                 ; Select CoreXY mode (2.03RC1 and below)
 M669 K1                 ; Select CoreXY mode (2.03 and up)
 
 ; Network
-M550 Pvoron21                   ; hostname, netbios name
+M550 P"v2.694"                  ; hostname, netbios name
 M551 Preprap                    ; machine password (for FTP)
 M98 P"/sys/config-wifi.g"       ; contains M587
 M552 S1                         ; Enable network
@@ -68,14 +68,14 @@ M208 X351.5 Y352 Z349 S0        ; Set axis maxima
 
 ; Bed leveling
 M671 X-57:-57:362:362 Y0:420:420:0 S20          ; Define Z belts locations (Front_Left, Back_Left, Back_Right, Front_Right)
-M557 X25:325 Y25:325 S25                        ; Define bed mesh grid (inductive probe, positions include the Z offset!)
-                                                ; (not used normally, but configures probing for the graphical bed report)
+;M557 X25:325 Y25:325 S25                       ; Define bed mesh grid (inductive probe, positions include the Z offset!)
+M557 X25:325 Y25:325 P5                         ; Define bed mesh grid (inductive probe, positions include the Z offset!)
 
 ; Bed heater
 ; DO NOT GO OVER 0.4w/cm2! Better still ~10m to 100c. So 65% PWM max, better is 40-50% range.
 ; DO NOT SCREW TIGHT FIRST FEW RUNS
 ; Tuning:
-;   M303 H0 P0.65 S105  ; run autotune on bed with 65% PWM max
+;   M303 H0 P0.60 S105  ; run autotune on bed with 60% PWM max (~10m to 100 for me)
 ;   M500                ; save autotune results to config-override.g
 M305 P0 S"Bed heater" T100000 B4584             ; bed thermistor (Keenovo NTC 100K 3950K), beta comes from range 25-100c from R/T sheet
 M143 P100 H0 X103 A2 C0 S110                    ; make sure silicone heater stays below 110°C

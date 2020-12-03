@@ -13,6 +13,6 @@ M558 P7 H7 R0.2 F120 T18000 A5 S0.01 I1
 ; https://duet3d.dozuki.com/Wiki/Gcode#Section_G31_Set_or_Report_Current_Probe_status
 ;   ...G31 Z0.7 will tell the RepRap machine that it is at a height of 0.7mm when the probe is triggered...
 ; Z IS WHERE TO SET Z-OFFSET
-G31 P500 X0 Y0 Z-0.88
+G31 P500 X0 Y0 Z-0.7
 
 G4 P200  ; Pause 200ms

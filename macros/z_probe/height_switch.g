@@ -1,4 +1,5 @@
-M98 P"/macros/motion/xy_z_switch.g"
+; Rapidly move to near z-switch position
+M98 P"/macros/motion/xyz_z_switch.g"
 
 M98 P"/macros/z_probe/use_switch.g"
 

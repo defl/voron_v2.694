@@ -21,14 +21,17 @@ M116          ; Wait for all to reach temp
 M561          ; Clear any bed transform
 M98 P"/macros/z_probe/level_inductive.g"
 
+; Restore mesh
+;G29 S1       ; Load previously probed bed mesh
+G29 S0        ; Probe new mesh
+
 ; Once level ask for head clean
 M98 P"/macros/motion/xyz_front_high.g"
-M300 S2000 P200  ; beep
 M291 P"Please clean my head" S3
 
 ; Determine Z by switch (and swap back)
 M98 P"/macros/z_probe/height_switch.g"
 M98 P"/macros/z_probe/use_inductive.g"
 
-; Restore mesh
-G29 S1  ; Load previously probed bed mesh
+; Move to convienient probing point
+M98 P"/macros/motion/xy_center_z_2mm.g"
