@@ -1,4 +1,4 @@
-; Configuration file for Duet WiFi (firmware version 2.03 or newer)
+; Configuration file for Duet WiFi (firmware version 2.03 or newer required)
 ; executed by the firmware on start-up
 
 ; General preferences
@@ -11,13 +11,12 @@ M575 P1 B57600 S1       ; Comms parameters for PanelDue
 M564 S1 H1              ; Forbid axis movements when not homed
 
 ; General setup
-M667 S1                 ; Select CoreXY mode (2.03RC1 and below)
 M669 K1                 ; Select CoreXY mode (2.03 and up)
 
 ; Network
 M550 P"v2.694"                  ; hostname, netbios name
 M551 Preprap                    ; machine password (for FTP)
-M98 P"/sys/config-wifi.g"       ; contains M587
+M98 P"/sys/config-wifi.g"       ; contains M587 with AP name and password
 M552 S1                         ; Enable network
 M586 P0 S1                      ; Enable HTTP (for DWC)
 M586 P1 S1                      ; Enable FTP (for remote backups)
@@ -60,16 +59,17 @@ M84 S120                        ; Idle timeout
 M204 P1500 T2000                ; Set printing acceleration and travel accelerations
                                 ; TODO: Take this out?
 
-; Endstops
-M574 X2 Y2 S1                   ; XY endstops (XY=2 is endstop high end, S1 means active high)
-M574 Z0 S0                      ; Z endstop (S0 means active low)
-M208 X-3 Y-2 Z0 S1              ; Set axis minima
-M208 X351.5 Y352 Z349 S0        ; Set axis maxima
+; Endstops and limits
+; Negative Z possible with bed compensation, see https://forum.duet3d.com/topic/16185/mesh-bed-leveling-not-moving-bed?_=1607070303609
+M574 X2 Y2 S1                     ; XY endstops (XY=2 is endstop high end, S1 means active high)
+M574 Z0 S0                        ; Z endstop (S0 means active low)
+M208 X-3:351.5 Y-2:352 Z-0.3:349  ; min:max (-z possible with bed level compensation)
 
 ; Bed leveling
-M671 X-57:-57:362:362 Y0:420:420:0 S20          ; Define Z belts locations (Front_Left, Back_Left, Back_Right, Front_Right)
-;M557 X25:325 Y25:325 S25                       ; Define bed mesh grid (inductive probe, positions include the Z offset!)
-M557 X25:325 Y25:325 P5                         ; Define bed mesh grid (inductive probe, positions include the Z offset!)
+;M376                                   ; DO NOT USE WITHOUT TESTING: https://forum.duet3d.com/topic/16185/mesh-bed-leveling-not-moving-bed?_=1607070303607
+M671 X-57:-57:362:362 Y0:420:420:0 S20  ; Define Z belts locations (Front_Left, Back_Left, Back_Right, Front_Right)
+;M557 X25:325 Y25:325 P15               ; Define bed mesh grid (inductive probe, positions include the Z offset!)
+M557 X25:325 Y25:325 P7                 ; --^, but much faster and less accurate
 
 ; Bed heater
 ; DO NOT GO OVER 0.4w/cm2! Better still ~10m to 100c. So 65% PWM max, better is 40-50% range.
