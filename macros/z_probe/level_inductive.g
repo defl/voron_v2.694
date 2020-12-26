@@ -1,3 +1,5 @@
+; Level bed using inductive probe
+
 M98 P"/macros/z_probe/use_inductive.g"
 
 M98 P"/macros/drive/z_reduced.g"

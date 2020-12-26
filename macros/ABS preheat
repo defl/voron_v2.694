@@ -1,0 +1,16 @@
+G90        ; Abs pos
+T0         ; select tool 0
+
+; Start pre-heating bed
+M140 S100     ; non-blocking bed
+
+; Home all axis while we're waiting, move head close to bed to warm up as well
+G28           
+M98 P"/macros/motion/xy_center_z_2mm.g"
+
+; Bed takes a long amount of time, wait until close to desired
+M190 S100     ; blocking bed
+
+; Once close, go to 105 both both head and bed
+M104 S105     ; non-blocking head
+M140 S105     ; non-blocking bed

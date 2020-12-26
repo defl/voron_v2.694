@@ -1,0 +1,25 @@
+; Assumes we're homed and heated, you can use "ABS preheat" for that
+
+M291 P"Is the printer homed and heat soaked (case high>44)?" S3
+
+; Move head up little bit so that heat of head does not affect bed
+M98 P"/macros/motion/xy_center_z_1cm.g"
+
+; Start heating head and once hot retract bit of filament to prevent oozing
+M109 S200     ; blocking head
+M83           ; relative extruder mode
+G1 E-10 F300  ; Retract a little bit, slowly
+
+; Move to cleaning point and ask
+M98 P"/macros/motion/xyz_front_high.g"
+M291 P"Please clean my head" S3
+
+; Level the lot right after
+G32
+
+; After cleaning move back to safe head cooldown position while keeping heat soaked
+M98 P"/macros/motion/xy_center_z_1cm.g"
+M109 S105     ; blocking head
+
+; Move back to pre-heating position
+M98 P"/macros/motion/xy_center_z_2mm.g"
